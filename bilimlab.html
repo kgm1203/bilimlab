@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilim-Lab AI | Сыдықова Ақтоты</title>
+    
+    <link rel="icon" href="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" type="image/x-icon">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --blue: #1a73e8; 
+            --green: #34a853; 
+            --dark: #202124; 
+            --gray: #5f6368;
+        }
+
+        /* TIMES NEW ROMAN ҚАРІПІ */
+        body { 
+            font-family: 'Times New Roman', Times, serif; 
+            background: #f4f6f8; 
+            margin: 0; 
+            color: var(--dark); 
+            line-height: 1.6; 
+        }
+
+        header { 
+            background: white; 
+            padding: 40px 20px; 
+            text-align: center; 
+            border-bottom: 5px solid var(--blue); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .logo-box {
+            width: 140px; 
+            height: 140px; 
+            margin: 0 auto 20px;
+            border-radius: 50%; 
+            border: 4px solid var(--blue);
+            overflow: hidden; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { margin: 0; font-size: 36px; color: var(--blue); font-weight: bold; }
+        .author-title { font-size: 22px; color: var(--gray); margin-top: 10px; font-style: italic; }
+        .status-badge { 
+            display: inline-block; 
+            background: #e8f0fe; 
+            color: var(--blue); 
+            padding: 6px 20px; 
+            border-radius: 25px; 
+            font-size: 15px; 
+            margin-top: 15px; 
+            font-weight: bold; 
+        }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 40px; 
+            box-shadow: 0 10px 35px rgba(0,0,0,0.05); 
+            margin-bottom: 40px; 
+            border-left: 8px solid var(--blue);
+        }
+
+        h2 { display: flex; align-items: center; gap: 15px; margin-top: 0; color: var(--blue); font-size: 28px; }
+
+        .ai-engine { background: #f9fbff; padding: 30px; border-radius: 15px; border: 1px solid #dce7f5; }
+        textarea { 
+            width: 100%; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 2px solid #cbd5e0; 
+            font-size: 18px; 
+            font-family: 'Times New Roman', serif;
+            box-sizing: border-box; 
+            resize: none;
+        }
+
+        .btn-generate { 
+            background: var(--blue); 
+            color: white; 
+            border: none; 
+            padding: 20px; 
+            border-radius: 12px; 
+            width: 100%; 
+            font-weight: bold; 
+            font-size: 20px; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .btn-generate:hover { background: #1557b0; transform: scale(1.01); box-shadow: 0 8px 20px rgba(26,115,232,0.3); }
+
+        #result-area { display: none; margin-top: 35px; animation: fadeIn 0.8s ease; }
+        .output-table { width: 100%; border-collapse: collapse; border: 2px solid var(--blue); }
+        .output-table th { background: #f1f5f9; padding: 20px; text-align: left; width: 30%; border: 1px solid #cbd5e0; font-size: 18px; }
+        .output-table td { background: white; padding: 20px; border: 1px solid #cbd5e0; font-size: 18px; }
+
+        .resources-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; 
+            margin-top: 30px; 
+        }
+        .resource-card { 
+            background: white; 
+            border: 1px solid #e2e8f0; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            transition: 0.3s; 
+        }
+        .resource-card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .resource-card i { font-size: 50px; color: var(--blue); margin-bottom: 20px; }
+        
+        .btn-action { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 12px 30px; 
+            background: var(--green); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 60px 20px; 
+            background: white; 
+            border-top: 1px solid #e2e8f0; 
+            margin-top: 60px;
+            font-size: 18px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-box">
+        <img src="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" alt="Bilim-Lab">
+    </div>
+    <h1>BILIM-LAB AI</h1>
+    <div class="author-title">Сыдықова Ақтоты Абзалқызының авторлық платформасы</div>
+    <div class="status-badge">Бастауыш білім берудегі цифрлық әдістемелер</div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2><i class="fas fa-microchip"></i> Интеллектуалды Әдіскер</h2>
+        <p style="font-size: 18px; color: var(--gray);">Сабақ тақырыбын немесе оқу мақсатын енгізіңіз. ИИ сіздің авторлық әдістеріңізді негізге ала отырып, критерийлер құрастырады.</p>
+        <div class="ai-engine">
+            <textarea id="topicBox" rows="3" placeholder="Мысалы: 3.2.1.2 Өсімдіктердің қоршаған ортаға бейімделуі"></textarea>
+            <button class="btn-generate" onclick="startAI()">
+                <i class="fas fa-wand-magic-sparkles"></i> ГЕНЕРАЦИЯ ЖАСАУ
+            </button>
+        </div>
+
+        <div id="wait-msg" style="display:none; text-align:center; margin-top:25px; font-size:20px; font-weight:bold; color:var(--blue);">
+            <i class="fas fa-spinner fa-spin"></i> Gemini AI жауап дайындауда...
+        </div>
+
+        <div id="result-area">
+            <table class="output-table">
+                <tr><th>Бағалау критерийі:</th><td id="resCrit"></td></tr>
+                <tr><th>Белсенді тапсырма:</th><td id="resTask"></td></tr>
+                <tr><th>Дескрипторлар:</th><td id="resDesc"></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-folder-tree"></i> Әдістемелік Қоржын</h2>
+        <div class="resources-grid">
+            <div class="resource-card">
+                <i class="fas fa-helicopter"></i>
+                <h3>Вертолет</h3>
+                <p>30 оқушыға арналған презентациялық бағалау парағы</p>
+                <a href="https://docs.google.com/presentation/d/1gaxAad-vhwCff-M-4eP4Ryn_PTqzPgRF/edit?usp=sharing" target="_blank" class="btn-action">ЖҮКТЕУ</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-horse"></i>
+                <h3>Бәйге</h3>
+                <p>Белсенді оқыту және топтық жарыс әдістемесі</p>
+                <a href="https://docs.google.com/presentation/d/1FG2JFa6W6XOJyVVX7yJq4CeO0ZekOVuO/edit?usp=sharing" target="_blank" class="btn-action">ЖҮКТЕУ</a>
+            </div>
+            <div class="resource-card">
+                <i class="fas fa-seedling"></i>
+                <h3>Өскін</h3>
+                <p>Сабақты қорытындылауға арналған кері байланыс парағы</p>
+                <a href="https://docs.google.com/presentation/d/1pK-06ZVBURBIJhJbdGZhVphGcY_dMC4l/edit?usp=sharing" target="_blank" class="btn-action">ЖҮКТЕУ</a>
+            </div>
+            <div class="resource-card" style="grid-column: 1 / -1; background: #fcfdfe;">
+                <i class="fas fa-file-signature" style="color: #2c3e50;"></i>
+                <h3>Тоты - Курстық зерттеу жұмысы</h3>
+                <p>«Бастауыш сыныптарда бағалау әдістерін цифрландырудың тиімділігі» тақырыбындағы толық ғылыми еңбек</p>
+                <a href="https://drive.google.com/file/d/16L_EMyix9ZVqmgG50mcAFhDSegbMBj8K/view?usp=sharing" target="_blank" class="btn-action" style="background:#2c3e50;">ҚҰЖАТТЫ ОҚУ (DOCX)</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <div style="margin-bottom: 10px;"><strong>Сыдықова Ақтоты Абзалқызы</strong></div>
+    <div>&copy; 2026 Барлық құқықтар қорғалған. Авторлық жұмыс.</div>
+</footer>
+
+<script>
+    // GEMINI API КІЛТІ
+    const KEY_AI = "AIzaSy..."; 
+
+    async function startAI() {
+        const topic = document.getElementById('topicBox').value.trim();
+        const resBox = document.getElementById('result-area');
+        const wait = document.getElementById('wait-msg');
+
+        if (!topic) { alert("Тақырыпты толтырыңыз!"); return; }
+
+        wait.style.display = 'block';
+        resBox.style.display = 'none';
+
+        try {
+            const promptStr = `Сен бастауыш сынып әдіскерісің. Тақырып: "${topic}". Осыған сәйкес 1 бағалау критерийін, 1 белсенді тапсырма және 3 дескриптор құрастыр. Бағалау әдістері ретінде тек "Вертолет", "Бәйге" немесе "Өскін" әдістерін ұсын. Жауапты тек мына форматта бер: Критерий: [текст] | Тапсырма: [текст] | Дескрипторлар: [текст]`;
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${KEY_AI}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptStr }] }] })
+            });
+
+            const data = await response.json();
+            const rawText = data.candidates[0].content.parts[0].text;
+            const segments = rawText.split('|');
+
+            document.getElementById('resCrit').innerText = segments[0].replace('Критерий:', '').trim();
+            document.getElementById('resTask').innerText = segments[1].replace('Тапсырма:', '').trim();
+            document.getElementById('resDesc').innerText = segments[2].replace('Дескрипторлар:', '').trim();
+            
+            resBox.style.display = 'block';
+        } catch (err) {
+            alert("Жүйеде қате орын алды. Интернетті немесе API кілтті тексеріңіз.");
+        } finally {
+            wait.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
