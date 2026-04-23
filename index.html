@@ -7,43 +7,47 @@
     <link rel="icon" href="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --blue: #1a73e8; --green: #34a853; --dark: #202124; --gray: #5f6368; }
+        :root { --blue: #1a73e8; --green: #34a853; --dark: #202124; --orange: #e67e22; --red: #d93025; }
         body { font-family: 'Times New Roman', Times, serif; background: #f4f6f8; margin: 0; color: var(--dark); line-height: 1.6; }
         header { background: white; padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--blue); }
         .logo-box { width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; border: 3px solid var(--blue); overflow: hidden; background: white; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
         h1 { margin: 0; font-size: 32px; color: var(--blue); }
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .container { max-width: 950px; margin: 30px auto; padding: 0 20px; }
         .card { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--blue); }
+        h2 { color: var(--blue); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 24px; }
         
-        /* AI ГЕНЕРАТОР */
+        /* AI GENERATOR */
         .ai-section { background: #f8faff; padding: 25px; border-radius: 12px; border: 1px solid #d1e3fa; }
         textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; font-family: 'Times New Roman', serif; box-sizing: border-box; }
-        .btn-main { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px; }
+        .btn-main { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .btn-main:hover { background: #1557b0; }
         
-        /* КЕСТЕ СТИЛІ */
         .res-table { width: 100%; border-collapse: collapse; background: white; border: 2px solid var(--blue); margin-top: 20px; }
         .res-table th { background: #f1f5f9; padding: 15px; text-align: left; width: 30%; border: 1px solid #cbd5e0; color: var(--blue); }
         .res-table td { padding: 15px; border: 1px solid #cbd5e0; font-size: 17px; white-space: pre-line; }
 
-        /* ГАЛЕРЕЯ (БАҒАЛАУ КАРТАЛАРЫ) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
-        .item { border: 1px solid #eee; border-radius: 12px; overflow: hidden; text-align: center; background: #fff; transition: 0.3s; }
-        .item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .item img { width: 100%; height: 150px; object-fit: cover; }
-        .item p { padding: 10px; font-weight: bold; margin: 0; color: var(--dark); }
+        /* GALLERY */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        .item { border: 1px solid #eee; border-radius: 12px; overflow: hidden; text-align: center; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .item img { width: 100%; height: 140px; object-fit: cover; }
+        .item p { padding: 8px; font-weight: bold; margin: 0; font-size: 14px; }
 
-        .template-selector { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--blue); font-size: 18px; margin-bottom: 20px; font-family: 'Times New Roman', serif; }
-        .btn-dl { display: inline-block; padding: 10px 20px; background: var(--green); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px; margin-top: 10px; }
-        
-        footer { text-align: center; padding: 40px; color: var(--gray); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* DOWNLOAD BUTTONS */
+        .download-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px; }
+        .btn-dl { display: flex; align-items: center; gap: 12px; padding: 15px; background: var(--green); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; font-size: 15px; }
+        .btn-dl:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-pptx { background: #d93025; } /* PowerPoint color */
+        .btn-doc { background: #2b579a; } /* Word color */
+        .btn-map { background: var(--orange); }
+
+        footer { text-align: center; padding: 40px; color: #5f6368; font-size: 15px; border-top: 1px solid #eee; margin-top: 40px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-box"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" alt="Logo"></div>
+    <div class="logo-box"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" alt="Bilim-Lab Logo"></div>
     <h1>BILIM-LAB AI</h1>
     <p>Сыдықова Ақтоты Абзалқызының авторлық платформасы</p>
 </header>
@@ -51,10 +55,9 @@
 <div class="container">
 
     <div class="card">
-        <h2><i class="fas fa-wand-magic-sparkles"></i> Дескрипторлар генераторы (AI)</h2>
-        <p>Оқу мақсатын жазыңыз, ИИ сізге критерий мен дескриптор құрастырып береді:</p>
+        <h2><i class="fas fa-robot"></i> Дескрипторлар генераторы</h2>
         <div class="ai-section">
-            <textarea id="topicInp" rows="3" placeholder="Мысалы: 3.2.1.2 Өсімдіктердің қоршаған ортаға бейімделуі"></textarea>
+            <textarea id="topicInp" rows="3" placeholder="Оқу мақсатын немесе тақырыпты енгізіңіз..."></textarea>
             <button class="btn-main" onclick="generateAI()">ГЕНЕРАЦИЯ ЖАСАУ</button>
         </div>
         <div id="loading" style="display:none; text-align:center; margin:20px;"><i class="fas fa-spinner fa-spin"></i> Gemini AI өңдеуде...</div>
@@ -68,52 +71,44 @@
     </div>
 
     <div class="card">
-        <h2><i class="fas fa-copy"></i> Дайын бағалау үлгілері</h2>
-        <p>Тақырыпты таңдаңыз:</p>
-        <select class="template-selector" onchange="showTemplate(this.value)">
-            <option value="">-- Таңдау --</option>
-            <option value="plant">Өсімдіктердің бейімделуі</option>
-            <option value="light">Жарық көздері</option>
-            <option value="water">Су айналымы</option>
-        </select>
-        <div id="template-area" style="display:none; animation: fadeIn 0.5s;">
-            <h3 id="tTitle" style="color: var(--blue);"></h3>
-            <table class="res-table">
-                <tr><th>Критерий</th><td id="tCrit"></td></tr>
-                <tr><th>Тапсырма</th><td id="tTask"></td></tr>
-                <tr><th>Дескриптор</th><td id="tDesc"></td></tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2><i class="fas fa-images"></i> Бағалау әдістері (Көрнекіліктер)</h2>
+        <h2><i class="fas fa-th-large"></i> Бағалау әдістерінің көрнекілігі</h2>
         <div class="grid">
-            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/palette.jpg"><p>«Бояулар» әдісі</p></div>
-            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/space.jpg"><p>«Ғарыш» әдісі</p></div>
-            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/battery.jpg"><p>«Батарея» әдісі</p></div>
-            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/apples.jpg"><p>«Алма ағашы»</p></div>
+            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/palette.jpg"><p>Палитра</p></div>
+            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/space.jpg"><p>Күн жүйесі</p></div>
+            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/battery.jpg"><p>Батарея</p></div>
+            <div class="item"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/apples.jpg"><p>Алма ағашы</p></div>
         </div>
     </div>
 
-    <div class="card">
-        <h2><i class="fas fa-download"></i> Жүктеуге арналған файлдар</h2>
-        <a href="https://docs.google.com/presentation/d/1gaxAad-vhwCff-M-4eP4Ryn_PTqzPgRF/edit" target="_blank" class="btn-dl">Вертолет (PPTX)</a>
-        <a href="https://docs.google.com/presentation/d/1FG2JFa6W6XOJyVVX7yJq4CeO0ZekOVuO/edit" target="_blank" class="btn-dl">Бәйге (PPTX)</a>
-        <a href="https://drive.google.com/file/d/16L_EMyix9ZVqmgG50mcAFhDSegbMBj8K/view" target="_blank" class="btn-dl" style="background:#2b579a;">Курстық жұмыс (DOCX)</a>
+    <div class="card" style="border-left-color: var(--green);">
+        <h2><i class="fas fa-cloud-download-alt"></i> Әдістемелік қоржын (Жүктеу)</h2>
+        <div class="download-area">
+            <a href="https://docs.google.com/presentation/d/1gaxAad-vhwCff-M-4eP4Ryn_PTqzPgRF/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Бәйге (15 оқушы)</a>
+            <a href="https://docs.google.com/presentation/d/1FG2JFa6W6XOJyVVX7yJq4CeO0ZekOVuO/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Вертолет әдісі</a>
+            <a href="https://docs.google.com/presentation/d/1pK-06ZVBURBIJhJbdGZhVphGcY_dMC4l/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Оқушыны бағалау жинағы</a>
+            <a href="https://docs.google.com/presentation/d/16M8hTz8btl7loHfIQ8deLOSgsu_iE4f7/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> «Өскін» бағалауы</a>
+            
+            <a href="https://drive.google.com/file/d/16L_EMyix9ZVqmgG50mcAFhDSegbMBj8K/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-map-marked-alt"></i> Зерттеу картасы (DOCX)</a>
+            <a href="https://drive.google.com/file/d/1bTNk5AxvVzUg4nhk1Mo818CCA_fonhvm/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-tree"></i> Бағалау ағашы</a>
+            <a href="https://drive.google.com/file/d/1QJub4hRiLt5UQo8n4S8N2B63bL8MePR5/view" target="_blank" class="btn-dl btn-doc"><i class="fas fa-check-double"></i> Бағалау парағы</a>
+            <a href="https://drive.google.com/file/d/1GdW2LDY2PNciMgkIhdk8vq1jVa_ODNy-/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-sun"></i> Күн жүйесі әдісі</a>
+            <a href="https://drive.google.com/file/d/15xHAsJ2JI69gy2npOONBLrmrWZADGja4/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-palette"></i> Палитра әдісі</a>
+        </div>
     </div>
 
 </div>
 
-<footer><strong>© 2026 Сыдықова Ақтоты</strong></footer>
+<footer>
+    <strong>© 2026 Сыдықова Ақтоты Абзалқызы</strong><br>
+    Бастауыш сынып мұғалімдеріне арналған цифрлық көмекші
+</footer>
 
 <script>
     const API_KEY = "AIzaSyC6fM_pYm2O_j-kFvH-H9qU6xL3X9-xI"; 
 
-    // AI ГЕНЕРАТОР ФУНКЦИЯСЫ
     async function generateAI() {
-        const topic = document.getElementById('topicInp').value;
-        if(!topic) return alert("Тақырыпты жазыңыз!");
+        const topic = document.getElementById('topicInp').value.trim();
+        if(!topic) return alert("Тақырыпты толтырыңыз!");
         
         document.getElementById('loading').style.display = 'block';
         document.getElementById('result-area').style.display = 'none';
@@ -122,12 +117,24 @@
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({contents: [{parts: [{text: `Бастауыш сыныпқа арналған "${topic}" тақырыбына: 1 Критерий, 1 Тапсырма және 3 Дескриптор жаз. Жауапты Критерий: | Тапсырма: | Дескриптор: форматында бөл.`}]}]})
+                body: JSON.stringify({
+                    contents: [{parts: [{text: `Критерий, тапсырма және 3 дескриптор жаз: ${topic}. Формат: Критерий | Тапсырма | Дескрипторлар`}]}]
+                })
             });
             const data = await response.json();
-            const text = data.candidates[0].content.parts[0].text;
-            const parts = text.split('|');
+            const resText = data.candidates[0].content.parts[0].text;
+            const parts = resText.split('|');
             
-            document.getElementById('outCrit').innerText = parts[0].replace(/Критерий:/i, '').trim();
-            document.getElementById('outTask').innerText = parts[1].replace(/Тапсырма:/i, '').trim();
-            document.getElementById('outDesc').innerText =
+            document.getElementById('outCrit').innerText = parts[0] || "---";
+            document.getElementById('outTask').innerText = parts[1] || "---";
+            document.getElementById('outDesc').innerText = parts[2] || "---";
+            document.getElementById('result-area').style.display = 'block';
+        } catch(e) {
+            alert("Қате орын алды. Қайта көріңіз.");
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
