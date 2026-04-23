@@ -9,31 +9,40 @@
     <style>
         :root { --blue: #1a73e8; --green: #34a853; --dark: #202124; --orange: #e67e22; --red: #d93025; }
         body { font-family: 'Times New Roman', Times, serif; background: #f4f6f8; margin: 0; color: var(--dark); line-height: 1.6; }
+        
+        /* HEADER */
         header { background: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--blue); }
         .logo-container svg { width: 150px; height: auto; }
         h1 { margin: 10px 0 0 0; font-size: 32px; color: var(--blue); }
+        .author-text { color: #5f6368; font-style: italic; margin-bottom: 20px; }
+
         .container { max-width: 950px; margin: 30px auto; padding: 0 20px; }
         .card { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--blue); }
         h2 { color: var(--blue); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 24px; }
         
+        /* AI GENERATOR SECTION */
         .ai-section { background: #f8faff; padding: 25px; border-radius: 12px; border: 1px solid #d1e3fa; }
-        textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; font-family: 'Times New Roman', serif; box-sizing: border-box; outline: none; }
+        textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; font-family: 'Times New Roman', serif; box-sizing: border-box; outline: none; transition: 0.3s; }
+        textarea:focus { border-color: var(--blue); box-shadow: 0 0 8px rgba(26,115,232,0.2); }
         .btn-main { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
-        .btn-main:disabled { background: #ccc; }
+        .btn-main:hover { background: #1557b0; }
+        .btn-main:disabled { background: #ccc; cursor: not-allowed; }
         
+        /* RESULT TABLE */
         .res-table { width: 100%; border-collapse: collapse; background: white; border: 2px solid var(--blue); margin-top: 20px; display: none; }
         .res-table th { background: #f1f5f9; padding: 15px; text-align: left; width: 25%; border: 1px solid #cbd5e0; color: var(--blue); }
         .res-table td { padding: 15px; border: 1px solid #cbd5e0; font-size: 17px; white-space: pre-line; }
 
+        /* DOWNLOAD BUTTONS */
         .download-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px; }
         .btn-dl { display: flex; align-items: center; gap: 12px; padding: 15px; background: var(--green); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 15px; transition: 0.2s; }
-        .btn-dl:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-dl:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .btn-pptx { background: #d93025; }
         .btn-doc { background: #2b579a; }
         .btn-map { background: var(--orange); }
 
-        footer { text-align: center; padding: 40px; color: #5f6368; }
-        #error-msg { color: red; margin-top: 10px; display: none; background: #fff1f1; padding: 10px; border-radius: 8px; border: 1px solid #ffcccc; }
+        #error-msg { color: #d93025; background: #fff1f1; padding: 10px; border-radius: 8px; border: 1px solid #ffcccc; margin-top: 10px; display: none; }
+        footer { text-align: center; padding: 40px; color: #5f6368; font-size: 15px; border-top: 1px solid #eee; margin-top: 40px; }
     </style>
 </head>
 <body>
@@ -50,103 +59,19 @@
         </svg>
     </div>
     <h1>BILIM-LAB AI</h1>
-    <p>Сыдықова Ақтоты Абзалқызының авторлық платформасы</p>
+    <p class="author-text">Сыдықова Ақтоты Абзалқызының авторлық платформасы</p>
 </header>
 
 <div class="container">
+
     <div class="card">
-        <h2><i class="fas fa-magic"></i> Дескрипторлар генераторы</h2>
+        <h2><i class="fas fa-robot"></i> Дескрипторлар генераторы</h2>
         <div class="ai-section">
-            <textarea id="topicInp" rows="3" placeholder="Тақырыпты немесе оқу мақсатын жазыңыз..."></textarea>
+            <textarea id="topicInp" rows="3" placeholder="Оқу мақсатын немесе сабақ тақырыбын енгізіңіз..."></textarea>
             <button class="btn-main" id="genBtn" onclick="generateAI()">ГЕНЕРАЦИЯ ЖАСАУ</button>
             <div id="error-msg"></div>
         </div>
-
+        
         <div id="loading" style="display:none; text-align:center; margin:20px;">
             <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--blue);"></i>
-            <p>Gemini AI жауап дайындап жатыр...</p>
-        </div>
-
-        <table class="res-table" id="resTable">
-            <tr><th>Критерий</th><td id="outCrit"></td></tr>
-            <tr><th>Тапсырма</th><td id="outTask"></td></tr>
-            <tr><th>Дескрипторлар</th><td id="outDesc"></td></tr>
-        </table>
-    </div>
-
-    <div class="card" style="border-left-color: var(--green);">
-        <h2><i class="fas fa-folder-open"></i> Әдістемелік қоржын</h2>
-        <div class="download-area">
-            <a href="https://docs.google.com/presentation/d/1gaxAad-vhwCff-M-4eP4Ryn_PTqzPgRF/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Бәйге (15 оқушы)</a>
-            <a href="https://docs.google.com/presentation/d/1FG2JFa6W6XOJyVVX7yJq4CeO0ZekOVuO/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Вертолет әдісі</a>
-            <a href="https://drive.google.com/file/d/16L_EMyix9ZVqmgG50mcAFhDSegbMBj8K/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-map-marked-alt"></i> Зерттеу картасы</a>
-            <a href="https://drive.google.com/file/d/1bTNk5AxvVzUg4nhk1Mo818CCA_fonhvm/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-tree"></i> Бағалау ағашы</a>
-            <a href="https://drive.google.com/file/d/1QJub4hRiLt5UQo8n4S8N2B63bL8MePR5/view" target="_blank" class="btn-dl btn-doc"><i class="fas fa-check-double"></i> Бағалау парағы</a>
-            <a href="https://drive.google.com/file/d/1GdW2LDY2PNciMgkIhdk8vq1jVa_ODNy-/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-sun"></i> Күн жүйесі</a>
-            <a href="https://drive.google.com/file/d/15xHAsJ2JI69gy2npOONBLrmrWZADGja4/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-palette"></i> Палитра әдісі</a>
-        </div>
-    </div>
-</div>
-
-<footer><strong>© 2026 Сыдықова Ақтоты Абзалқызы</strong></footer>
-
-<script>
-    const API_KEY = "AIzaSyB03kZLZ3qjyQf9yvT0Q58xy4ThpWgMyTw";
-
-    async function generateAI() {
-        const topic = document.getElementById('topicInp').value.trim();
-        const btn = document.getElementById('genBtn');
-        const loader = document.getElementById('loading');
-        const table = document.getElementById('resTable');
-        const errMsg = document.getElementById('error-msg');
-
-        if(!topic) return alert("Тақырыпты жазыңыз!");
-
-        btn.disabled = true;
-        loader.style.display = 'block';
-        table.style.display = 'none';
-        errMsg.style.display = 'none';
-
-        try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    contents: [{parts: [{text: `Сен бастауыш сынып мұғаліміне көмекшісің. "${topic}" тақырыбына сабақ жоспарының бөлігін жаса. 
-                    Жауапты қатаң түрде мына форматта бер:
-                    КРИТЕРИЙ: [мәтін]
-                    ТАПСЫРМА: [мәтін]
-                    ДЕСКРИПТОРЛАР: [мәтін]`}]}]
-                })
-            });
-
-            const data = await response.json();
-            
-            if(data.error) {
-                errMsg.innerText = "Қате: API кілті дұрыс емес немесе шектеу қойылған.";
-                errMsg.style.display = 'block';
-                return;
-            }
-
-            const fullText = data.candidates[0].content.parts[0].text;
-            
-            const critMatch = fullText.match(/КРИТЕРИЙ:([\s\S]*?)ТАПСЫРМА:/i);
-            const taskMatch = fullText.match(/ТАПСЫРМА:([\s\S]*?)ДЕСКРИПТОРЛАР:/i);
-            const descMatch = fullText.match(/ДЕСКРИПТОРЛАР:([\s\S]*)/i);
-
-            document.getElementById('outCrit').innerText = critMatch ? critMatch[1].trim() : fullText;
-            document.getElementById('outTask').innerText = taskMatch ? taskMatch[1].trim() : "---";
-            document.getElementById('outDesc').innerText = descMatch ? descMatch[1].trim() : "---";
-            
-            table.style.display = 'table';
-        } catch(e) {
-            errMsg.innerText = "Жүйелік қате. Интернетті немесе API кілтін тексеріңіз.";
-            errMsg.style.display = 'block';
-        } finally {
-            btn.disabled = false;
-            loader.style.display = 'none';
-        }
-    }
-</script>
-</body>
-</html>
+            <p>Жау
