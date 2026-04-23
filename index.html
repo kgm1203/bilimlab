@@ -6,28 +6,36 @@
     <title>Bilim-Lab AI | Сыдықова Ақтоты</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --blue: #1a73e8; --green: #34a853; --dark: #202124; }
-        body { font-family: 'Times New Roman', serif; background: #f4f6f8; margin: 0; color: var(--dark); line-height: 1.6; }
+        :root { --blue: #1a73e8; --green: #34a853; --dark: #202124; --orange: #e67e22; --red: #d93025; }
+        body { font-family: 'Times New Roman', Times, serif; background: #f4f6f8; margin: 0; color: var(--dark); line-height: 1.6; }
         
         header { background: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--blue); }
         .logo-container svg { width: 150px; height: auto; }
-        
+        h1 { margin: 10px 0 0 0; font-size: 32px; color: var(--blue); }
+        .author-text { color: #5f6368; font-style: italic; }
+
         .container { max-width: 950px; margin: 30px auto; padding: 0 20px; }
         .card { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--blue); }
+        h2 { color: var(--blue); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 24px; }
         
         .ai-section { background: #f8faff; padding: 25px; border-radius: 12px; border: 1px solid #d1e3fa; }
         textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; box-sizing: border-box; outline: none; }
-        
         .btn-main { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px; }
-        
-        /* КЕСТЕ СТИЛІ */
-        .res-table { width: 100%; border-collapse: collapse; background: white; border: 2px solid var(--blue); margin-top: 20px; display: none; animation: fadeIn 0.5s; }
-        .res-table th { background: #f1f5f9; padding: 15px; text-align: left; border: 1px solid #cbd5e0; color: var(--blue); font-size: 18px; }
+
+        /* ГЕНЕРАЦИЯЛАНҒАН КЕСТЕ */
+        .res-table { width: 100%; border-collapse: collapse; background: white; border: 2px solid var(--blue); margin-top: 20px; display: none; }
+        .res-table th { background: #f1f5f9; padding: 15px; text-align: left; border: 1px solid #cbd5e0; color: var(--blue); }
         .res-table td { padding: 15px; border: 1px solid #cbd5e0; font-size: 17px; vertical-align: top; }
-        
-        .tag { display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: bold; margin-bottom: 5px; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ҚОРЖЫН БӨЛІМІ */
+        .download-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px; }
+        .btn-dl { display: flex; align-items: center; gap: 12px; padding: 15px; background: var(--green); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 15px; transition: 0.2s; }
+        .btn-dl:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-pptx { background: var(--red); }
+        .btn-map { background: var(--orange); }
+        .btn-doc { background: #2b579a; }
+
+        footer { text-align: center; padding: 40px; color: #5f6368; font-size: 15px; }
     </style>
 </head>
 <body>
@@ -44,51 +52,54 @@
         </svg>
     </div>
     <h1>BILIM-LAB AI</h1>
+    <p class="author-text">Сыдықова Ақтоты Абзалқызының авторлық платформасы</p>
 </header>
 
 <div class="container">
+    
     <div class="card">
         <h2><i class="fas fa-magic"></i> Дескрипторлар генераторы</h2>
         <div class="ai-section">
-            <textarea id="topicInp" rows="3" placeholder="Тақырыпты енгізіңіз (мысалы: Өсімдіктер әлемі)"></textarea>
-            <button class="btn-main" onclick="generateTemplate()">ГЕНЕРАЦИЯ ЖАСАУ</button>
+            <textarea id="topicInp" rows="3" placeholder="Тақырыпты енгізіңіз..."></textarea>
+            <button class="btn-main" onclick="generateResult()">ГЕНЕРАЦИЯ ЖАСАУ</button>
         </div>
 
         <table class="res-table" id="resTable">
-            <thead>
-                <tr>
-                    <th>Бағалау критерийі</th>
-                    <th>Тапсырма</th>
-                    <th>Дескрипторлар</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="colCrit"></td>
-                    <td id="colTask"></td>
-                    <td id="colDesc"></td>
-                </tr>
-            </tbody>
+            <tr><th>Бағалау критерийі</th><td id="colCrit"></td></tr>
+            <tr><th>Тапсырма</th><td id="colTask"></td></tr>
+            <tr><th>Дескрипторлар</th><td id="colDesc"></td></tr>
         </table>
     </div>
+
+    <div class="card" style="border-left-color: var(--green);">
+        <h2><i class="fas fa-folder-open"></i> Әдістемелік қоржын</h2>
+        <div class="download-area">
+            <a href="https://docs.google.com/presentation/d/1gaxAad-vhwCff-M-4eP4Ryn_PTqzPgRF/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Бәйге (15 оқушы)</a>
+            <a href="https://docs.google.com/presentation/d/1FG2JFa6W6XOJyVVX7yJq4CeO0ZekOVuO/edit" target="_blank" class="btn-dl btn-pptx"><i class="fas fa-file-powerpoint"></i> Вертолет әдісі</a>
+            <a href="https://drive.google.com/file/d/16L_EMyix9ZVqmgG50mcAFhDSegbMBj8K/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-map-marked-alt"></i> Зерттеу картасы</a>
+            <a href="https://drive.google.com/file/d/1bTNk5AxvVzUg4nhk1Mo818CCA_fonhvm/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-tree"></i> Бағалау ағашы</a>
+            <a href="https://drive.google.com/file/d/1QJub4hRiLt5UQo8n4S8N2B63bL8MePR5/view" target="_blank" class="btn-dl btn-doc"><i class="fas fa-check-double"></i> Бағалау парағы</a>
+            <a href="https://drive.google.com/file/d/1GdW2LDY2PNciMgkIhdk8vq1jVa_ODNy-/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-sun"></i> Күн жүйесі</a>
+            <a href="https://drive.google.com/file/d/15xHAsJ2JI69gy2npOONBLrmrWZADGja4/view" target="_blank" class="btn-dl btn-map"><i class="fas fa-palette"></i> Палитра әдісі</a>
+        </div>
+    </div>
+
 </div>
 
+<footer>
+    <strong>© 2026 Сыдықова Ақтоты Абзалқызы</strong>
+</footer>
+
 <script>
-    function generateTemplate() {
+    function generateResult() {
         const topic = document.getElementById('topicInp').value.trim();
         if(!topic) return alert("Тақырыпты жазыңыз!");
 
-        // Кестені толтыру (Сіздің үлгіңіз бойынша)
-        document.getElementById('colCrit').innerHTML = `<span class="tag">Критерий</span><br>Өсімдік мүшелерін таниды және олардың маңызын сипаттайды.`;
-        
-        document.getElementById('colTask').innerHTML = `<span class="tag">"Жас зерттеуші" әдісі</span><br>Берілген өсімдік суретіндегі мүшелерді атап, олардың қызметін түсіндіріңіз.`;
-        
-        document.getElementById('colDesc').innerHTML = `
-            1. Өсімдік мүшелерін суреттен дұрыс тауып, атайды;<br>
-            2. Тамыр мен сабақтың айырмашылығын түсіндіреді;<br>
-            3. Жапырақтың маңызын сипаттайды.`;
+        // "Өсімдіктер әлемі" шаблоны
+        document.getElementById('colCrit').innerText = "Өсімдік мүшелерін таниды және олардың маңызын сипаттайды.";
+        document.getElementById('colTask').innerText = "«Жас зерттеуші» әдісі: Суреттегі өсімдік мүшелерін атап, қызметін түсіндіру.";
+        document.getElementById('colDesc').innerHTML = "1. Өсімдік мүшелерін дұрыс атайды;<br>2. Тамыр мен сабақтың қызметін сипаттайды;<br>3. Жапырақтың маңызын түсіндіреді.";
 
-        // Кестені көрсету
         document.getElementById('resTable').style.display = 'table';
     }
 </script>
