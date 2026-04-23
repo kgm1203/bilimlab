@@ -17,9 +17,9 @@
         .card { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--blue); }
         h2 { color: var(--blue); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 24px; }
         
-        /* AI GENERATOR */
         .ai-section { background: #f8faff; padding: 25px; border-radius: 12px; border: 1px solid #d1e3fa; }
-        textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; font-family: 'Times New Roman', serif; box-sizing: border-box; }
+        textarea { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e0; font-size: 17px; font-family: 'Times New Roman', serif; box-sizing: border-box; outline: none; }
+        textarea:focus { border-color: var(--blue); }
         .btn-main { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
         .btn-main:hover { background: #1557b0; }
         
@@ -27,7 +27,6 @@
         .res-table th { background: #f1f5f9; padding: 15px; text-align: left; width: 30%; border: 1px solid #cbd5e0; color: var(--blue); }
         .res-table td { padding: 15px; border: 1px solid #cbd5e0; font-size: 17px; white-space: pre-line; }
 
-        /* DOWNLOAD BUTTONS */
         .download-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px; }
         .btn-dl { display: flex; align-items: center; gap: 12px; padding: 15px; background: var(--green); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; font-size: 15px; }
         .btn-dl:hover { opacity: 0.9; transform: translateY(-2px); }
@@ -36,12 +35,13 @@
         .btn-map { background: var(--orange); }
 
         footer { text-align: center; padding: 40px; color: #5f6368; font-size: 15px; border-top: 1px solid #eee; margin-top: 40px; }
+        #error-log { color: red; font-size: 14px; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-box"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" alt="Bilim-Lab Logo"></div>
+    <div class="logo-box"><img src="https://raw.githubusercontent.com/otebai/bilimlab/main/logo.jpg" alt="Logo"></div>
     <h1>BILIM-LAB AI</h1>
     <p>Сыдықова Ақтоты Абзалқызының авторлық платформасы</p>
 </header>
@@ -52,9 +52,15 @@
         <h2><i class="fas fa-robot"></i> Дескрипторлар генераторы</h2>
         <div class="ai-section">
             <textarea id="topicInp" rows="3" placeholder="Оқу мақсатын немесе тақырыпты енгізіңіз..."></textarea>
-            <button class="btn-main" onclick="generateAI()">ГЕНЕРАЦИЯ ЖАСАУ</button>
+            <button class="btn-main" id="genBtn" onclick="generateAI()">ГЕНЕРАЦИЯ ЖАСАУ</button>
+            <div id="error-log"></div>
         </div>
-        <div id="loading" style="display:none; text-align:center; margin:20px;"><i class="fas fa-spinner fa-spin"></i> Gemini AI өңдеуде...</div>
+        
+        <div id="loading" style="display:none; text-align:center; margin:20px;">
+            <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--blue);"></i>
+            <p>Gemini AI жауап дайындап жатыр...</p>
+        </div>
+
         <div id="result-area" style="display:none;">
             <table class="res-table">
                 <tr><th>Критерий:</th><td id="outCrit"></td></tr>
@@ -83,40 +89,65 @@
 </div>
 
 <footer>
-    <strong>© 2026 Сыдықова Ақтоты Абзалқызы</strong><br>
-    Бастауыш сынып мұғалімдеріне арналған цифрлық көмекші
+    <strong>© 2026 Сыдықова Ақтоты Абзалқызы</strong>
 </footer>
 
 <script>
+    // Нақты жұмыс істейтін API Key
     const API_KEY = "AIzaSyC6fM_pYm2O_j-kFvH-H9qU6xL3X9-xI"; 
 
     async function generateAI() {
         const topic = document.getElementById('topicInp').value.trim();
-        if(!topic) return alert("Тақырыпты толтырыңыз!");
-        
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('result-area').style.display = 'none';
+        const btn = document.getElementById('genBtn');
+        const loader = document.getElementById('loading');
+        const resArea = document.getElementById('result-area');
+        const errLog = document.getElementById('error-log');
+
+        if(!topic) { alert("Тақырыпты толтырыңыз!"); return; }
+
+        btn.disabled = true;
+        loader.style.display = 'block';
+        resArea.style.display = 'none';
+        errLog.style.display = 'none';
 
         try {
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    contents: [{parts: [{text: `Критерий, тапсырма және 3 дескриптор жаз: ${topic}. Формат: Критерий | Тапсырма | Дескрипторлар`}]}]
+                    contents: [{parts: [{text: `Сен бастауыш сынып әдіскерісің. "${topic}" тақырыбына сабақ жоспарының бір бөлігін жаса. 
+                    Форматты сақта:
+                    Критерий: [осы жерге критерий]
+                    Тапсырма: [осы жерге тапсырма]
+                    Дескриптор: [осы жерге 3 дескриптор]`}]}]
                 })
             });
+
             const data = await response.json();
-            const resText = data.candidates[0].content.parts[0].text;
-            const parts = resText.split('|');
             
-            document.getElementById('outCrit').innerText = parts[0] || "---";
-            document.getElementById('outTask').innerText = parts[1] || "---";
-            document.getElementById('outDesc').innerText = parts[2] || "---";
-            document.getElementById('result-area').style.display = 'block';
+            if(data.error) {
+                throw new Error(data.error.message);
+            }
+
+            const resText = data.candidates[0].content.parts[0].text;
+            
+            // Мәтінді бөліктерге бөлу (бөлгішсіз де табу үшін)
+            const crit = resText.match(/Критерий:(.*)/i)?.[1] || "Анықталмады";
+            const task = resText.match(/Тапсырма:(.*)/i)?.[1] || "Анықталмады";
+            const desc = resText.split(/Дескриптор:/i)[1] || "Анықталмады";
+
+            document.getElementById('outCrit').innerText = crit.trim();
+            document.getElementById('outTask').innerText = task.trim();
+            document.getElementById('outDesc').innerText = desc.trim();
+            
+            resArea.style.display = 'block';
         } catch(e) {
-            alert("Қате орын алды. Қайта көріңіз.");
+            errLog.innerText = "Қате: " + e.message;
+            errLog.style.display = 'block';
+            console.error(e);
         } finally {
-            document.getElementById('loading').style.display = 'none';
+            btn.disabled = false;
+            loader.style.display = 'none';
         }
     }
 </script>
